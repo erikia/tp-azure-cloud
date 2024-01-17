@@ -1,0 +1,21 @@
+# Création d'un groupe de ressources
+az group create --name tpazuregrouperes --location francecentral
+
+# Création d'un compte de stockage
+az storage account create --name tpazurecomptestockage --resource-group tpazuregrouperes --location francecentral --sku Standard_LRS --kind StorageV2
+
+# Création d'un service d'applications
+az appservice plan create --name tpazureserviceapp --resource-group tpazuregrouperes --sku B1 --is-linux
+az webapp create --resource-group tpazuregrouperes --plan tpazureserviceapp --name tpazurenomwebapp --runtime "NODE|20-lts" --deployment-local-git
+
+# Création d'un service Cognitive Services
+az cognitiveservices account create --name tpazurecognitiveservices --resource-group tpazuregrouperes --kind ComputerVision --sku S1 --location francecentral --yes
+
+
+az keyvault create --name CoffreFortTpAzure --resource-group tpazuregrouperes --location francecentral
+
+
+az storage account show-connection-string --name tpazurecomptestockage --resource-group tpazuregrouperes
+{
+  "connectionString": "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=tpazurecomptestockage;AccountKey=hI1e61iUYbjJFtV3m3BHjV4kdRVUkcLgK/idpcKwKX7ymzK4rj5J20UD1TpZh9juTk0bqWfeE+xs+AStl9FTSw==;BlobEndpoint=https://tpazurecomptestockage.blob.core.windows.net/;FileEndpoint=https://tpazurecomptestockage.file.core.windows.net/;QueueEndpoint=https://tpazurecomptestockage.queue.core.windows.net/;TableEndpoint=https://tpazurecomptestockage.table.core.windows.net/"
+}
